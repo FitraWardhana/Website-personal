@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JualinAja - Marketplace Terpercaya</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fff5e6 0%, #ffffff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 420px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .screen {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        header {
+            background: linear-gradient(135deg, #FF8A00 0%, #FFB700 100%);
+            padding: 16px;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header:hover {
+            transform: scale(1.02);
+        }
+
+        header h1 {
+            color: #fff;
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            flex: 1;
+        }
+
+        .cart-icon {
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff4444;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .section {
+            padding: 20px 16px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"], select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #FF8A00;
+            box-shadow: 0 0 10px rgba(255, 138, 0, 0.3);
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FF8A00 0%, #FFB700 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #fffbe7;
+            color: #FF8A00;
+            border: 1px solid #FFB700;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .product-card {
+            background: linear-gradient(135deg, #fffbe7 0%, #fff8e1 100%);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 138, 0, 0.2);
+            border-color: #FFB700;
+        }
+
+        .product-card img {
+            border-radius: 8px;
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            margin-bottom: 12px;
+        }
+
+        .product-card h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .product-card .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #FF8A00;
+            margin-bottom: 12px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid #eee;
+            background: #fafafa;
+            margin-bottom: 8px;
+            border-radius: 8px;
+        }
+
+        .cart-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 16px;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-info h4 {
+            margin-bottom: 4px;
+            color: #333;
+        }
+
+        .cart-item-info .price {
+            color: #FF8A00;
+            font-weight: bold;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 8px 0;
+        }
+
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 50%;
+            background: #FF8A00;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .total-section {
+            background: linear-gradient(135deg, #FF8A00 0%, #FFB700 100%);
+            color: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 12px;
+        }
+
+        .total-section h3 {
+            margin-bottom: 12px;
+        }
+
+        .order-item {
+            background: #f8f9fa;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border-left: 4px solid #FF8A00;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-pending {
+            background: #ffc107;
+            color: #000;
+        }
+
+        .status-processing {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .status-shipped {
+            background: #28a745;
+            color: white;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            background: #FF8A00;
+            color: white;
+        }
+
+        .floating-emoji {
+            position: fixed;
+            font-size: 30px;
+            pointer-events: none;
+            z-index: 999;
+            animation: float 3s ease-out forwards;
+        }
+
+        @keyframes float {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
+
+        .rainbow-text {
+            background: linear-gradient(45deg, #FF8A00, #FFB700, #00ff00, #0080ff, #8000ff);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow 2s ease-in-out infinite;
+        }
+
+        @keyframes rainbow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .konami-sequence {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #FF8A00 0%, #FFB700 100%);
+            padding: 30px;
+            border-radius: 20px;
+            color: white;
+            text-align: center;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .back-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #fffbe7 0%, #fff8e1 100%);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid #FFB700;
+        }
+
+        .stat-card h3 {
+            font-size: 24px;
+            color: #FF8A00;
+            margin-bottom: 8px;
+        }
+
+        .stat-card p {
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- LOGIN SCREEN -->
+        <div class="screen active" id="loginScreen">
+            <header onclick="headerClick()">
+                <h1 id="title">🔐 JualinAja</h1>
+            </header>
+            <div class="section">
+                <h2>Masuk ke Akun Anda</h2>
+                <div class="form-group">
+                    <label>Email atau No. WhatsApp</label>
+                    <input type="text" id="loginEmail" placeholder="contoh@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" placeholder="Password Anda">
+                </div>
+                <button class="btn btn-primary" style="width: 100%; margin-bottom: 12px;" onclick="login()">
+                    🚀 Masuk
+                </button>
+                <button class="btn btn-secondary" style="width: 100%;" onclick="showScreen('registerScreen')">
+                    📝 Belum punya akun? Daftar
+                </button>
+            </div>
+        </div>
+
+        <!-- REGISTER SCREEN -->
+        <div class="screen" id="registerScreen">
+            <header>
+                <button class="back-btn" onclick="showScreen('loginScreen')">←</button>
+                <h1>📝 Daftar</h1>
+                <div></div>
+            </header>
+            <div class="section">
+                <h2>Buat Akun Baru</h2>
+                <div class="form-group">
+                    <label>Nama Lengkap</label>
+                    <input type="text" id="regName" placeholder="Nama Anda">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="regEmail" placeholder="contoh@email.com">
+                </div>
+                <div class="form-group">
+                    <label>No. WhatsApp</label>
+                    <input type="text" id="regPhone" placeholder="08123456789">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="regPassword" placeholder="Password Anda">
+                </div>
+                <div class="form-group">
+                    <label>Tipe Akun</label>
+                    <select id="accountType">
+                        <option value="buyer">🛍️ Pembeli</option>
+                        <option value="seller">🏪 Penjual</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" style="width: 100%;" onclick="register()">
+                    ✨ Daftar Sekarang
+                </button>
+            </div>
+        </div>
+
+        <!-- MAIN DASHBOARD -->
+        <div class="screen" id="dashboardScreen">
+            <header onclick="headerClick()">
+                <h1 id="mainTitle">🏪 JualinAja</h1>
+                <div class="cart-icon" onclick="showScreen('cartScreen')">
+                    🛒
+                    <div class="cart-count" id="cartCount">0</div>
+                </div>
+            </header>
+            
+            <div class="section">
+                <input type="text" id="searchInput" placeholder="Cari produk... (coba ketik 'konami')" onkeyup="searchProducts(event)">
+                <div class="tabs" style="margin-top: 16px;">
+                    <div class="tab active" onclick="filterProducts('all')">Semua</div>
+                    <div class="tab" onclick="filterProducts('gadget')">📱 Gadget</div>
+                    <div class="tab" onclick="filterProducts('fashion')">👕 Fashion</div>
+                    <div class="tab" onclick="filterProducts('food')">🍔 Food</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="product-grid" id="productGrid">
+                    <!-- Products will be loaded here -->
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>🎯 Menu Cepat</h3>
+                <div style="display: flex; gap: 12px; margin-top: 16px;">
+                    <button class="btn btn-secondary" style="flex: 1;" onclick="showScreen('ordersScreen')">
+                        📦 Pesanan
+                    </button>
+                    <button class="btn btn-secondary" style="flex: 1;" onclick="showScreen('profileScreen')">
+                        👤 Profile
+                    </button>
+                    <button class="btn btn-secondary" style="flex: 1;" onclick="logout()">
+                        🚪 Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRODUCT DETAIL SCREEN -->
+        <div class="screen" id="productDetailScreen">
+            <header>
+                <button class="back-btn" onclick="showScreen('dashboardScreen')">←</button>
+                <h1>📦 Detail Produk</h1>
+                <div class="cart-icon" onclick="showScreen('cartScreen')">
+                    🛒
+                    <div class="cart-count" id="cartCount2">0</div>
+                </div>
+            </header>
+            <div id="productDetailContent">
+                <!-- Product detail will be loaded here -->
+            </div>
+        </div>
+
+        <!-- CART SCREEN -->
+        <div class="screen" id="cartScreen">
+            <header>
+                <button class="back-btn" onclick="showScreen('dashboardScreen')">←</button>
+                <h1>🛒 Keranjang</h1>
+                <div></div>
+            </header>
+            <div class="section">
+                <div id="cartItems">
+                    <!-- Cart items will be loaded here -->
+                </div>
+                <div class="total-section">
+                    <h3>💰 Total Belanja</h3>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span id="totalAmount">Rp 0</span>
+                        <button class="btn" style="background: white; color: #FF8A00;" onclick="checkout()">
+                            🚀 Checkout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHECKOUT SCREEN -->
+        <div class="screen" id="checkoutScreen">
+            <header>
+                <button class="back-btn" onclick="showScreen('cartScreen')">←</button>
+                <h1>💳 Checkout</h1>
+                <div></div>
+            </header>
+            <div class="section">
+                <h3>📍 Alamat Pengiriman</h3>
+                <div class="form-group">
+                    <label>Alamat Lengkap</label>
+                    <input type="text" id="shippingAddress" placeholder="Jl. Contoh No. 123">
+                </div>
+                <div class="form-group">
+                    <label>Kota</label>
+                    <input type="text" id="shippingCity" placeholder="Jakarta">
+                </div>
+                <div class="form-group">
+                    <label>Kode Pos</label>
+                    <input type="text" id="shippingZip" placeholder="12345">
+                </div>
+            </div>
+            <div class="section">
+                <h3>💳 Metode Pembayaran</h3>
+                <div class="form-group">
+                    <select id="paymentMethod">
+                        <option value="transfer">🏦 Transfer Bank</option>
+                        <option value="ewallet">📱 E-Wallet</option>
+                        <option value="cod">💵 Cash on Delivery</option>
+                    </select>
+                </div>
+            </div>
+            <div class="section">
+                <div class="total-section">
+                    <h3>📋 Ringkasan Pesanan</h3>
+                    <div id="orderSummary"></div>
+                    <button class="btn" style="background: white; color: #FF8A00; width: 100%; margin-top: 16px;" onclick="processPayment()">
+                        💰 Bayar Sekarang
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ORDERS SCREEN -->
+        <div class="screen" id="ordersScreen">
+            <header>
+                <button class="back-btn" onclick="showScreen('dashboardScreen')">←</button>
+                <h1>📦 Pesanan Saya</h1>
+                <div></div>
+            </header>
+            <div class="section">
+                <div class="tabs">
+                    <div class="tab active" onclick="filterOrders('all')">Semua</div>
+                    <div class="tab" onclick="filterOrders('pending')">Pending</div>
+                    <div class="tab" onclick="filterOrders('shipped')">Dikirim</div>
+                </div>
+                <div id="ordersList">
+                    <!-- Orders will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- PROFILE SCREEN -->
+        <div class="screen" id="profileScreen">
+            <header>
+                <button class="back-btn" onclick="showScreen('dashboardScreen')">←</button>
+                <h1>👤 Profile</h1>
+                <div></div>
+            </header>
+            <div class="section">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #FF8A00, #FFB700); border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-size: 30px;">
+                        👤
+                    </div>
+                    <h2 id="userName">User</h2>
+                    <p id="userEmail">user@email.com</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3 id="totalOrders">0</h3>
+                        <p>Total Pesanan</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="totalSpent">Rp 0</h3>
+                        <p>Total Belanja</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <button class="btn btn-secondary" style="width: 100%; margin-bottom: 12px;" onclick="editProfile()">
+                        ✏️ Edit Profile
+                    </button>
+                    <button class="btn btn-secondary" style="width: 100%; margin-bottom: 12px;" onclick="changePassword()">
+                        🔒 Ubah Password
+                    </button>
+                    <button class="btn btn-danger" style="width: 100%;" onclick="logout()">
+                        🚪 Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Easter Egg Modal -->
+    <div class="konami-sequence" id="konamiModal">
+        <h2>🎉 SELAMAT! 🎉</h2>
+        <p>Kamu menemukan Easter Egg rahasia!</p>
+        <p>🏆 Achievement Unlocked: Secret Explorer</p>
+        <button class="btn btn-primary" onclick="closeModal()" style="margin-top: 15px;">Tutup</button>
+    </div>
+
+    <script>
+        // Global State
+        let currentUser = null;
+        let cart = [];
+        let orders = [];
+        let headerClickCount = 0;
+        let secretCount = 0;
+
+        // Sample Products Data
+        const products = [
+            {
+                id: 1,
+                name: "iPhone 14 Pro",
+                price: 15000000,
+                category: "gadget",
+                image: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=300&h=300&fit=crop",
+                description: "Smartphone terbaru dengan kamera pro dan performa tinggi"
+            },
+            {
+                id: 2,
+                name: "Nike Air Jordan",
+                price: 2500000,
+                category: "fashion",
+                image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&h=300&fit=crop",
+                description: "Sepatu basket premium dengan desain iconic"
+            },
+            {
+                id: 3,
+                name: "Nasi Padang Set",
+                price: 25000,
+                category: "food",
+                image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=300&h=300&fit=crop",
+                description: "Paket nasi padang lengkap dengan lauk pilihan"
+            },
+            {
+                id: 4,
+                name: "MacBook Air M2",
+                price: 18000000,
+                category: "gadget",
+                image: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=300&h=300&fit=crop",
+                description: "Laptop premium untuk profesional dan creator"
+            },
+            {
+                id: 5,
+                name: "Hoodie Premium",
+                price: 350000,
+                category: "fashion",
+                image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=300&h=300&fit=crop",
+                description: "Hoodie berkualitas tinggi dengan bahan cotton premium"
+            },
+            {
+                id: 6,
+                name: "Pizza Margherita",
+                price: 85000,
+                category: "food",
+                image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300&h=300&fit=crop",
+                description: "Pizza autentik Italia dengan topping fresh basil"
+            }
+        ];
+
+        // Initialize App
+        function initApp() {
+            loadProducts();
+            updateCartCount();
+        }
+
+        // Screen Management
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        // Authentication
+        function login() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            if (email && password) {
+                currentUser = {
+                    name: email.split('@')[0],
+                    email: email,
+                    type: 'buyer'
+                };
+                updateUserInfo();
+                showScreen('dashboardScreen');
+                showNotification('🎉 Login berhasil! Selamat datang!');
+                createFloatingEmoji('🎉');
+            } else {
+                showNotification('❌ Mohon isi email dan password!');
+            }
+        }
+
+        function register() {
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const phone = document.getElementById('regPhone').value;
+            const password = document.getElementById('regPassword').value;
+            const type = document.getElementById('accountType').value;
+            
+            if (name && email && phone && password) {
+                currentUser = { name, email, phone, type };
+                updateUserInfo();
+                showScreen('dashboardScreen');
+                showNotification('✨ Akun berhasil dibuat! Selamat bergabung!');
+                createFloatingEmoji('🎊');
+            } else {
+                showNotification('❌ Mohon isi semua field!');
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            cart = [];
+            orders = [];
+            updateCartCount();
+            showScreen('loginScreen');
+            showNotification('👋 Sampai jumpa lagi!');
+        }
+
+        function updateUserInfo() {
+            if (currentUser) {
+                document.getElementById('userName').textContent = currentUser.name;
+                document.getElementById('userEmail').textContent = currentUser.email;
+                document.getElementById('totalOrders').textContent = orders.length;
+                document.getElementById('totalSpent').textContent = formatCurrency(calculateTotalSpent());
+            }
+        }
+
+        // Product Management
+        function loadProducts(filter = 'all') {
+            const productGrid = document.getElementById('productGrid');
+            const filteredProducts = filter === 'all' ? products : products.filter(p => p.category === filter);
+            
+            productGrid.innerHTML = filteredProducts.map(product => `
+                <div class="product-card" onclick="showProductDetail(${product.id})">
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <div class="price">${formatCurrency(product.price)}</div>
+                    <button class="btn btn-primary" onclick="event.stopPropagation(); addToCart(${product.id})">
+                        🛒 Tambah
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function filterProducts(category) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            loadProducts(category);
+            createFloatingEmoji('🔍');
+        }
+
+        function searchProducts(event) {
+            const query = event.target.value.toLowerCase();
+            
+            if (query === 'konami') {
+                showKonamiModal();
+                event.target.value = '';
+                return;
+            }
+            
+            const filtered = products.filter(p => 
+                p.name.toLowerCase().includes(query) || 
+                p.description.toLowerCase().includes(query)
+            );
+            
+            const productGrid = document.getElementById('productGrid');
+            productGrid.innerHTML = filtered.map(product => `
+                <div class="product-card" onclick="showProductDetail(${product.id})">
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <div class="price">${formatCurrency(product.price)}</div>
+                    <button class="btn btn-primary" onclick="event.stopPropagation(); addToCart(${product.id})">
+                        🛒 Tambah
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function showProductDetail(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            document.getElementById('productDetailContent').innerHTML = `
+                <div class="section">
+                    <img src="${product.image}" alt="${product.name}" style="width: 100%; height: 250px; object-fit: cover; border-radius: 12px; margin-bottom: 20px;">
+                    <h2>${product.name}</h2>
+                    <div class="price" style="font-size: 24px; margin-bottom: 16px;">${formatCurrency(product.price)}</div>
+                    <p style="color: #666; line-height: 1.6; margin-bottom: 20px;">${product.description}</p>
+                    <div style="display: flex; gap: 12px;">
+                        <button class="btn btn-primary" style="flex: 1;" onclick="addToCart(${product.id})">
+                            🛒 Tambah ke Keranjang
+                        </button>
+                        <button class="btn btn-success" style="flex: 1;" onclick="buyNow(${product.id})">
+                            ⚡ Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+            `;
+            showScreen('productDetailScreen');
+            createFloatingEmoji('📦');
+        }
+
+        // Cart Management
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const existingItem = cart.find(item => item.id === productId);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            
+            updateCartCount();
+            showNotification(`✅ ${product.name} ditambahkan ke keranjang!`);
+            createFloatingEmoji('🛒');
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartCount();
+            loadCartItems();
+            showNotification('🗑️ Item dihapus dari keranjang');
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartCount();
+                    loadCartItems();
+                }
+            }
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+            document.getElementById('cartCount2').textContent = count;
+        }
+
+        function loadCartItems() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #666;">
+                        🛒 Keranjang masih kosong
+                        <br><br>
+                        <button class="btn btn-primary" onclick="showScreen('dashboardScreen')">
+                            🛍️ Mulai Belanja
+                        </button>
+                    </div>
+                `;
+                document.getElementById('totalAmount').textContent = 'Rp 0';
+                return;
+            }
+            
+            cartItemsContainer.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="cart-item-info">
+                        <h4>${item.name}</h4>
+                        <div class="price">${formatCurrency(item.price)}</div>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                            <span style="margin: 0 12px; font-weight: bold;">${item.quantity}</span>
+                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                        </div>
+                    </div>
+                    <button class="btn btn-danger" onclick="removeFromCart(${item.id})" style="padding: 8px;">
+                        🗑️
+                    </button>
+                </div>
+            `).join('');
+            
+            const total = calculateCartTotal();
+            document.getElementById('totalAmount').textContent = formatCurrency(total);
+        }
+
+        function calculateCartTotal() {
+            return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+        }
+
+        // Checkout Process
+        function checkout() {
+            if (cart.length === 0) {
+                showNotification('❌ Keranjang masih kosong!');
+                return;
+            }
+            
+            showScreen('checkoutScreen');
+            loadOrderSummary();
+        }
+
+        function loadOrderSummary() {
+            const summary = document.getElementById('orderSummary');
+            const total = calculateCartTotal();
+            const shipping = 15000;
+            const grandTotal = total + shipping;
+            
+            summary.innerHTML = `
+                <div style="margin-bottom: 12px;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Subtotal:</span>
+                        <span>${formatCurrency(total)}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Ongkir:</span>
+                        <span>${formatCurrency(shipping)}</span>
+                    </div>
+                    <hr style="margin: 12px 0;">
+                    <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 18px;">
+                        <span>Total:</span>
+                        <span>${formatCurrency(grandTotal)}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function processPayment() {
+            const address = document.getElementById('shippingAddress').value;
+            const city = document.getElementById('shippingCity').value;
+            const zip = document.getElementById('shippingZip').value;
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            
+            if (!address || !city || !zip) {
+                showNotification('❌ Mohon lengkapi alamat pengiriman!');
+                return;
+            }
+            
+            const order = {
+                id: Date.now(),
+                items: [...cart],
+                total: calculateCartTotal() + 15000,
+                address: `${address}, ${city} ${zip}`,
+                paymentMethod: paymentMethod,
+                status: 'pending',
+                date: new Date().toLocaleDateString('id-ID')
+            };
+            
+            orders.push(order);
+            cart = [];
+            updateCartCount();
+            updateUserInfo();
+            
+            showScreen('ordersScreen');
+            loadOrders();
+            showNotification('🎉 Pesanan berhasil dibuat! Menunggu pembayaran.');
+            createFloatingEmoji('💳');
+        }
+
+        function buyNow(productId) {
+            cart = [];
+            addToCart(productId);
+            checkout();
+        }
+
+        // Orders Management
+        function loadOrders(filter = 'all') {
+            const ordersList = document.getElementById('ordersList');
+            
+            if (orders.length === 0) {
+                ordersList.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #666;">
+                        📦 Belum ada pesanan
+                        <br><br>
+                        <button class="btn btn-primary" onclick="showScreen('dashboardScreen')">
+                            🛍️ Mulai Belanja
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            const filteredOrders = filter === 'all' ? orders : orders.filter(o => o.status === filter);
+            
+            ordersList.innerHTML = filteredOrders.map(order => `
+                <div class="order-item">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <h4>Order #${order.id}</h4>
+                        <span class="status-badge status-${order.status}">${getStatusText(order.status)}</span>
+                    </div>
+                    <p style="color: #666; margin-bottom: 8px;">📅 ${order.date}</p>
+                    <p style="color: #666; margin-bottom: 8px;">📍 ${order.address}</p>
+                    <p style="color: #666; margin-bottom: 12px;">💳 ${getPaymentMethodText(order.paymentMethod)}</p>
+                    <div style="font-weight: bold; color: #FF8A00; margin-bottom: 12px;">
+                        Total: ${formatCurrency(order.total)}
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn btn-secondary" onclick="trackOrder(${order.id})" style="font-size: 12px; padding: 6px 12px;">
+                            📍 Lacak
+                        </button>
+                        ${order.status === 'pending' ? `
+                            <button class="btn btn-primary" onclick="payOrder(${order.id})" style="font-size: 12px; padding: 6px 12px;">
+                                💳 Bayar
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterOrders(status) {
+            document.querySelectorAll('#ordersScreen .tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            loadOrders(status);
+        }
+
+        function trackOrder(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                showNotification(`📍 Status pesanan: ${getStatusText(order.status)}`);
+                createFloatingEmoji('📦');
+            }
+        }
+
+        function payOrder(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                order.status = 'processing';
+                loadOrders();
+                showNotification('💳 Pembayaran berhasil! Pesanan sedang diproses.');
+                createFloatingEmoji('💰');
+            }
+        }
+
+        // Profile Management
+        function editProfile() {
+            showNotification('✏️ Fitur edit profile coming soon!');
+            createFloatingEmoji('👤');
+        }
+
+        function changePassword() {
+            showNotification('🔒 Fitur ubah password coming soon!');
+            createFloatingEmoji('🔐');
+        }
+
+        function calculateTotalSpent() {
+            return orders.reduce((total, order) => total + order.total, 0);
+        }
+
+        // Utility Functions
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(amount);
+        }
+
+        function getStatusText(status) {
+            const statusMap = {
+                'pending': 'Menunggu Pembayaran',
+                'processing': 'Diproses',
+                'shipped': 'Dikirim',
+                'delivered': 'Selesai'
+            };
+            return statusMap[status] || status;
+        }
+
+        function getPaymentMethodText(method) {
+            const methodMap = {
+                'transfer': 'Transfer Bank',
+                'ewallet': 'E-Wallet',
+                'cod': 'Cash on Delivery'
+            };
+            return methodMap[method] || method;
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #FF8A00, #FFB700);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 25px;
+                z-index: 1000;
+                font-size: 14px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                animation: slideIn 0.3s ease-out;
+                max-width: 300px;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (document.body.contains(notification)) {
+                    document.body.removeChild(notification);
+                }
+            }, 3000);
+        }
+
+        function createFloatingEmoji(emoji, element = null) {
+            const floatingEmoji = document.createElement('div');
+            floatingEmoji.className = 'floating-emoji';
+            floatingEmoji.textContent = emoji;
+            
+            if (element) {
+                const rect = element.getBoundingClientRect();
+                floatingEmoji.style.left = rect.left + rect.width/2 + 'px';
+                floatingEmoji.style.top = rect.top + 'px';
+            } else {
+                floatingEmoji.style.left = Math.random() * window.innerWidth + 'px';
+                floatingEmoji.style.top = Math.random() * window.innerHeight + 'px';
+            }
+            
+            document.body.appendChild(floatingEmoji);
+            
+            setTimeout(() => {
+                if (document.body.contains(floatingEmoji)) {
+                    document.body.removeChild(floatingEmoji);
+                }
+            }, 3000);
+        }
+
+        // Easter Eggs
+        function headerClick() {
+            headerClickCount++;
+            const title = document.getElementById('title') || document.getElementById('mainTitle');
+            
+            if (headerClickCount === 5) {
+                title.classList.add('rainbow-text');
+                showNotification('🌈 Rainbow Mode Activated!');
+                createFloatingEmoji('🌈');
+                secretCount++;
+            } else if (headerClickCount === 10) {
+                document.querySelector('header').style.transform = 'rotate(360deg)';
+                showNotification('🌀 Spinny Header!');
+                createFloatingEmoji('🌀');
+                secretCount++;
+            }
+        }
+
+        function showKonamiModal() {
+            document.getElementById('konamiModal').style.display = 'block';
+            createFloatingEmoji('🎉');
+            createFloatingEmoji('🏆');
+            createFloatingEmoji('⭐');
+            secretCount++;
+        }
+
+        function closeModal() {
+            document.getElementById('konamiModal').style.display = 'none';
+        }
+
+        // Initialize when page loads
+        window.onload = function() {
+            initApp();
+            
+            // Load cart items when cart screen is shown
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.target.id === 'cartScreen' && mutation.target.classList.contains('active')) {
+                        loadCartItems();
+                    }
+                    if (mutation.target.id === 'ordersScreen' && mutation.target.classList.contains('active')) {
+                        loadOrders();
+                    }
+                });
+            });
+            
+            observer.observe(document.getElementById('cartScreen'), {
+                attributes: true,
+                attributeFilter: ['class']
+            });
+            
+            observer.observe(document.getElementById('ordersScreen'), {
+                attributes: true,
+                attributeFilter: ['class']
+            });
+        };
+
+        // Add slide in animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
